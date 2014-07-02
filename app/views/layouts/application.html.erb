@@ -8,6 +8,11 @@
 </head>
 <body>
 
+<div id="container">
+	<%= flash[:notice] if flash[:notice] %>
+	<%= flash[:alert] if flash[:alert] %>
+
+
 <%= yield %>
 
 </body>
