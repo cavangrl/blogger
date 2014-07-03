@@ -11,14 +11,11 @@ class ArticlesController < ApplicationController
  	@article = Article.find(params[:id])
  	@comment = Comment.new
 	@comment.article_id = @article.id
-
  end
 
  def new
  	@article = Article.new
-
-
-end
+ end
 
   def create
     if current_user

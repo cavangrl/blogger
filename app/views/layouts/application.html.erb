@@ -9,7 +9,11 @@
 <body>
 
 <div id="container">
-	<%=link_to "Logout", logout_path, method: :delete %>
+	<% if current_user %>
+	<p>Hello <%= current_user.username %> (<%=link_to "Logout", logout_path, method: :delete %>) </p>
+	<% else %>
+	<p><%= link_to "Sign in", "/login" %> | <%= link_to "Sign up", new_user_path %> </p>
+	<% end %>
 	<%= flash[:notice] if flash[:notice] %>
 	<%= flash[:alert] if flash[:alert] %>
 
