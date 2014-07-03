@@ -20,10 +20,17 @@ end
 
   def create
     @article = Article.new(article_params)
+    @article.user = User.find(session[:user_id])
+    
+    if @article.save
+      flash[:notice] = "Posted"
+      redirect_to @article.user
+    else
+      flash[:alert] = "There was a problem. :("
+      redirect_to new_article_path
+    end
 
-    @article.save
-
-    redirect_to article_path(@article)
+  
   end
 
 
@@ -46,7 +53,7 @@ end
   	
 if @article.update(article_params)
       flash[:notice] = "Article updated."
-      redirect_to @article
+      redirect_to @article.user
     else
       flash[:alert] = "There was a problem. Please try again."
       redirect_to article_path(@article)
