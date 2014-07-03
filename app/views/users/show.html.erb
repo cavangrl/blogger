@@ -1,0 +1,15 @@
+<h1>User</h1>
+<h3><%= @user.username %></h3>
+<ul>
+	
+	<li>bio: <%= @user.bio %></li>
+</ul>
+
+<h3><%= "#{@user.username}'s Article" %></h3>
+<ul>
+	<% @user.articles.each do |article| %>
+		<li><%= article.body %> (<%= link_to "X", article_path(article), method: "delete" %>)</li>
+	<% end %>
+</ul>
+
+<p><%= link_to "New Article!", new_article_path %></p>
