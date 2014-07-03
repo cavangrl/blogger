@@ -19,20 +19,25 @@ end
 
 
   def create
-    @article = Article.new(article_params)
-    @article.user = User.find(session[:user_id])
-    
-    if @article.save
-      flash[:notice] = "Posted"
-      redirect_to @article.user
+    if current_user
+      @article = Article.new(article_params)
+      @article.user_id = current_user.id
+      
+      if @article.save
+        flash[:notice] = "Posted"
+        redirect_to articles_path
+      else
+        flash[:alert] = "There was a problem. :("
+        redirect_to new_article_path
+      end
+      
     else
-      flash[:alert] = "There was a problem. :("
-      redirect_to new_article_path
+      flash[:alert] = "You have to be signed in to do that."
+      redirect_to home_path
+
+    
     end
-
-  
   end
-
 
 
 
