@@ -18,10 +18,8 @@ class ArticlesController < ApplicationController
  end
 
   def create
-    if current_user
       @article = Article.new(article_params)
-      @article.user_id = current_user.id
-      
+      @article.user = User.find(session[:user_id])
       if @article.save
         flash[:notice] = "Posted"
         redirect_to articles_path
@@ -29,11 +27,6 @@ class ArticlesController < ApplicationController
         flash[:alert] = "There was a problem. :("
         redirect_to new_article_path
       end
-      
-    else
-      flash[:alert] = "You have to be signed in to do that."
-      redirect_to home_path
-    end
   end
 
 
@@ -55,7 +48,7 @@ class ArticlesController < ApplicationController
   	
 if @article.update(article_params)
       flash[:notice] = "Article updated."
-      redirect_to @article.user
+      redirect_to articles_path
     else
       flash[:alert] = "There was a problem. Please try again."
       redirect_to article_path(@article)
